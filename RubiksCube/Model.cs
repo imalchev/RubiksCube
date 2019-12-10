@@ -37,7 +37,7 @@ namespace RubiksCube
 
         public bool Equals([AllowNull] CentarPiece? other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
             {
                 return false;
             }
@@ -48,6 +48,26 @@ namespace RubiksCube
             }
 
             return Tale1 == other.Tale1;
+        }
+
+        public static bool operator == (CentarPiece? piece1, CentarPiece? piece2)
+        {
+            if(ReferenceEquals(piece1, null))
+            {
+                if(ReferenceEquals(piece2, null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return piece1.Equals(piece2);
+        }
+
+        public static bool operator != (CentarPiece? piece1, CentarPiece? piece2)
+        {
+            return !(piece1 == piece2);
         }
     }
 
@@ -60,7 +80,7 @@ namespace RubiksCube
         {
             if (color1 == color2)
             {
-                throw new ArgumentException("The colors can't be equal!",nameof(color2));
+                throw new ArgumentException($"The colors can't be equal! {nameof(color1)} is equal to {nameof(color2)}", nameof(color2));
             }
 
             Tale2 = color2;
@@ -75,7 +95,7 @@ namespace RubiksCube
 
         public bool Equals([AllowNull] TwoCorrnerPiece? other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
             {
                 return false;
             }
@@ -96,9 +116,14 @@ namespace RubiksCube
         public ThreeCorrnerPiece(Color color1, Color color2, Color color3)
             : base(color1, color2)
         {
-            if (color1 == color3 || color2 == color3)
+            if (color1 == color3)
             {
-                throw new ArgumentException("The colors can't be equal!", nameof(color3));
+                throw new ArgumentException($"The colors can't be equal! {nameof(color1)} is equal to {nameof(color3)}", nameof(color2));
+            }
+
+            if (color2 == color3)
+            {
+                throw new ArgumentException($"The colors can't be equal! {nameof(color2)} is equal to {nameof(color3)}", nameof(color3));
             }
 
             Tale3 = color3;
@@ -111,7 +136,7 @@ namespace RubiksCube
 
         public bool Equals([AllowNull] ThreeCorrnerPiece other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
             {
                 return false;
             }
