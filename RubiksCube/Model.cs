@@ -107,6 +107,26 @@ namespace RubiksCube
 
             return ((int)Tale1 | (int)Tale2) == ((int)other.Tale1 | (int)other.Tale2);
         }
+
+        public static bool operator == (TwoCorrnerPiece? piece1, TwoCorrnerPiece? piece2)
+        {
+            if(ReferenceEquals(piece1, null))
+            {
+                if(ReferenceEquals(piece2, null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return piece1.Equals(piece2);
+        }
+
+        public static bool operator != (TwoCorrnerPiece? piece1, TwoCorrnerPiece? piece2)
+        {
+            return !(piece1 == piece2);
+        }
     }
 
     public class ThreeCorrnerPiece : TwoCorrnerPiece, IEquatable<ThreeCorrnerPiece>
@@ -134,6 +154,8 @@ namespace RubiksCube
             return (int)Tale1 | (int)Tale2 | (int)Tale3;
         }
 
+        public override bool Equals(object? obj) => Equals(obj as ThreeCorrnerPiece);
+
         public bool Equals([AllowNull] ThreeCorrnerPiece other)
         {
             if (ReferenceEquals(other, null))
@@ -147,6 +169,26 @@ namespace RubiksCube
             }
 
             return ((int)Tale1 | (int)Tale2 | (int)Tale3) == ((int)other.Tale1 | (int)other.Tale2 | (int)other.Tale3);
+        }
+
+        public static bool operator == (ThreeCorrnerPiece? piece1, ThreeCorrnerPiece? piece2)
+        {
+            if(ReferenceEquals(piece1, null))
+            {
+                if(ReferenceEquals(piece2, null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return piece1.Equals(piece2);
+        }
+
+        public static bool operator != (ThreeCorrnerPiece? piece1, ThreeCorrnerPiece? piece2)
+        {
+            return !(piece1 == piece2);
         }
     }
 
