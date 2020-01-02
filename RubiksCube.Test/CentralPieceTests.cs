@@ -9,7 +9,7 @@ namespace RubiksCube.Test
         public void Ctor_Works()
         {
             // Arrange & Act
-            var piece = new CentarPiece(Color.Blue);
+            var piece = new CentralPiece(Color.Blue);
 
             // Assert
             Assert.Equal(Color.Blue, piece.Tale1);
@@ -19,7 +19,7 @@ namespace RubiksCube.Test
         public void GetHashCode_Returns_ColorsValue()
         {
             // Arrange
-            var piece = new CentarPiece(Color.Blue);
+            var piece = new CentralPiece(Color.Blue);
 
             // Act & Assert
             Assert.Equal((int)Color.Blue, piece.GetHashCode());

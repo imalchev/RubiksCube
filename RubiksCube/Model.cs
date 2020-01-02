@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace RubiksCube
 {
@@ -19,11 +17,11 @@ namespace RubiksCube
     {
     }
 
-    public class CentarPiece : IPice, IEquatable<CentarPiece>
+    public class CentralPiece : IPice, IEquatable<CentralPiece>
     {
         public Color Tale1 { get; }
 
-        public CentarPiece(Color color)
+        public CentralPiece(Color color)
         {
             Tale1 = color;
         }
@@ -33,9 +31,9 @@ namespace RubiksCube
             return (int)Tale1;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as CentarPiece);
+        public override bool Equals(object? obj) => Equals(obj as CentralPiece);
 
-        public bool Equals([AllowNull] CentarPiece? other)
+        public bool Equals(CentralPiece? other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -50,7 +48,7 @@ namespace RubiksCube
             return Tale1 == other.Tale1;
         }
 
-        public static bool operator == (CentarPiece? piece1, CentarPiece? piece2)
+        public static bool operator == (CentralPiece? piece1, CentralPiece? piece2)
         {
             if(ReferenceEquals(piece1, null))
             {
@@ -65,17 +63,17 @@ namespace RubiksCube
             return piece1.Equals(piece2);
         }
 
-        public static bool operator != (CentarPiece? piece1, CentarPiece? piece2)
+        public static bool operator != (CentralPiece? piece1, CentralPiece? piece2)
         {
             return !(piece1 == piece2);
         }
     }
 
-    public class TwoCorrnerPiece : CentarPiece, IEquatable<TwoCorrnerPiece>
+    public class TwoCornerPiece : CentralPiece, IEquatable<TwoCornerPiece>
     {        
         public Color Tale2 { get; }
     
-        public TwoCorrnerPiece(Color color1, Color color2) 
+        public TwoCornerPiece(Color color1, Color color2) 
             : base(color1)
         {
             if (color1 == color2)
@@ -91,9 +89,9 @@ namespace RubiksCube
             return (int)Tale1 | (int)Tale2;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as TwoCorrnerPiece);
+        public override bool Equals(object? obj) => Equals(obj as TwoCornerPiece);
 
-        public bool Equals([AllowNull] TwoCorrnerPiece? other)
+        public bool Equals(TwoCornerPiece? other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -108,7 +106,7 @@ namespace RubiksCube
             return ((int)Tale1 | (int)Tale2) == ((int)other.Tale1 | (int)other.Tale2);
         }
 
-        public static bool operator == (TwoCorrnerPiece? piece1, TwoCorrnerPiece? piece2)
+        public static bool operator == (TwoCornerPiece? piece1, TwoCornerPiece? piece2)
         {
             if(ReferenceEquals(piece1, null))
             {
@@ -123,17 +121,17 @@ namespace RubiksCube
             return piece1.Equals(piece2);
         }
 
-        public static bool operator != (TwoCorrnerPiece? piece1, TwoCorrnerPiece? piece2)
+        public static bool operator != (TwoCornerPiece? piece1, TwoCornerPiece? piece2)
         {
             return !(piece1 == piece2);
         }
     }
 
-    public class ThreeCorrnerPiece : TwoCorrnerPiece, IEquatable<ThreeCorrnerPiece>
+    public class ThreeCornerPiece : TwoCornerPiece, IEquatable<ThreeCornerPiece>
     {
         public Color Tale3 { get; }
 
-        public ThreeCorrnerPiece(Color color1, Color color2, Color color3)
+        public ThreeCornerPiece(Color color1, Color color2, Color color3)
             : base(color1, color2)
         {
             if (color1 == color3)
@@ -154,9 +152,9 @@ namespace RubiksCube
             return (int)Tale1 | (int)Tale2 | (int)Tale3;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as ThreeCorrnerPiece);
+        public override bool Equals(object? obj) => Equals(obj as ThreeCornerPiece);
 
-        public bool Equals([AllowNull] ThreeCorrnerPiece other)
+        public bool Equals(ThreeCornerPiece? other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -171,7 +169,7 @@ namespace RubiksCube
             return ((int)Tale1 | (int)Tale2 | (int)Tale3) == ((int)other.Tale1 | (int)other.Tale2 | (int)other.Tale3);
         }
 
-        public static bool operator == (ThreeCorrnerPiece? piece1, ThreeCorrnerPiece? piece2)
+        public static bool operator == (ThreeCornerPiece? piece1, ThreeCornerPiece? piece2)
         {
             if(ReferenceEquals(piece1, null))
             {
@@ -186,48 +184,9 @@ namespace RubiksCube
             return piece1.Equals(piece2);
         }
 
-        public static bool operator != (ThreeCorrnerPiece? piece1, ThreeCorrnerPiece? piece2)
+        public static bool operator != (ThreeCornerPiece? piece1, ThreeCornerPiece? piece2)
         {
             return !(piece1 == piece2);
         }
-    }
-
-    public class Cube
-    {
-        private static HashSet<IPice> s_pieces = new HashSet<IPice> 
-        {
-            new CentarPiece(Color.Yellow),   
-            new CentarPiece(Color.Red),
-            new CentarPiece(Color.Blue),
-            new CentarPiece(Color.Green),
-            new CentarPiece(Color.White),
-            new CentarPiece(Color.Orange),
-
-            new TwoCorrnerPiece(Color.Yellow, Color.Red), 
-            new TwoCorrnerPiece(Color.Yellow, Color.Green),
-            new TwoCorrnerPiece(Color.Yellow, Color.Blue),
-            new TwoCorrnerPiece(Color.Yellow, Color.Orange),
-            new TwoCorrnerPiece(Color.Red, Color.Green),
-            new TwoCorrnerPiece(Color.Red, Color.Blue),
-            new TwoCorrnerPiece(Color.Red, Color.White),
-            new TwoCorrnerPiece(Color.Blue, Color.White),
-            new TwoCorrnerPiece(Color.Blue, Color.Orange),            
-            new TwoCorrnerPiece(Color.Green, Color.Orange),
-            new TwoCorrnerPiece(Color.Green, Color.White),
-            new TwoCorrnerPiece(Color.Orange, Color.White),
-
-            new ThreeCorrnerPiece(Color.Yellow, Color.Red, Color.Blue),
-            new ThreeCorrnerPiece(Color.Yellow, Color.Red, Color.Green),
-            new ThreeCorrnerPiece(Color.Yellow, Color.Green, Color.Orange),
-            new ThreeCorrnerPiece(Color.Yellow, Color.Blue, Color.Orange),
-            new ThreeCorrnerPiece(Color.Red, Color.Green, Color.White),
-            new ThreeCorrnerPiece(Color.Red, Color.Blue, Color.White),
-            new ThreeCorrnerPiece(Color.Blue, Color.Orange, Color.White),
-            new ThreeCorrnerPiece(Color.Green, Color.Orange, Color.White)
-        };
-
-        private CentarPiece Yellow { get; } = new CentarPiece(Color.Yellow);
-
-        private IPice[,,] _state = new IPice[3, 3, 3];
     }
 }
