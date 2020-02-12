@@ -6,10 +6,10 @@ namespace RubiksCube.Test
 {
     public class CubeTests
     {
-        [Fact]
-        public void CtorWorks()
-        {
-            var cube = new Cube();
-        }
+        // [Fact]
+        // public void CtorWorks()
+        // {
+        //     var cube = new Cube();
+        // }
     }
 }

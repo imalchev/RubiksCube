@@ -13,11 +13,11 @@ namespace RubiksCube
         Yellow = 1 << 5
     }
 
-    public interface IPice
+    public interface IPiece
     {
     }
 
-    public class CentralPiece : IPice, IEquatable<CentralPiece>
+    public sealed class CentralPiece : IPiece, IEquatable<CentralPiece>
     {
         public Color Tale1 { get; }
 
@@ -69,18 +69,19 @@ namespace RubiksCube
         }
     }
 
-    public class TwoCornerPiece : CentralPiece, IEquatable<TwoCornerPiece>
+    public sealed class TwoCornerPiece : IPiece, IEquatable<TwoCornerPiece>
     {        
+        public Color Tale1 { get; }
         public Color Tale2 { get; }
     
-        public TwoCornerPiece(Color color1, Color color2) 
-            : base(color1)
+        public TwoCornerPiece(Color color1, Color color2)
         {
             if (color1 == color2)
             {
                 throw new ArgumentException($"The colors can't be equal! {nameof(color1)} is equal to {nameof(color2)}", nameof(color2));
             }
 
+            Tale1 = color1;
             Tale2 = color2;
         }
 
@@ -127,13 +128,19 @@ namespace RubiksCube
         }
     }
 
-    public class ThreeCornerPiece : TwoCornerPiece, IEquatable<ThreeCornerPiece>
+    public sealed class ThreeCornerPiece : IPiece, IEquatable<ThreeCornerPiece>
     {
+        public Color Tale1 { get; }
+        public Color Tale2 { get; }
         public Color Tale3 { get; }
 
         public ThreeCornerPiece(Color color1, Color color2, Color color3)
-            : base(color1, color2)
         {
+            if (color1 == color2)
+            {
+                throw new ArgumentException($"The colors can't be equal! {nameof(color1)} is equal to {nameof(color2)}", nameof(color2));
+            }
+
             if (color1 == color3)
             {
                 throw new ArgumentException($"The colors can't be equal! {nameof(color1)} is equal to {nameof(color3)}", nameof(color2));
@@ -142,8 +149,10 @@ namespace RubiksCube
             if (color2 == color3)
             {
                 throw new ArgumentException($"The colors can't be equal! {nameof(color2)} is equal to {nameof(color3)}", nameof(color3));
-            }
+            }            
 
+            Tale1 = color1;
+            Tale2 = color2;
             Tale3 = color3;
         }
 

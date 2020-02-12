@@ -33,6 +33,20 @@ namespace RubiksCube
         private ThreeCornerPiece BlueOrangeWhite { get; } = new ThreeCornerPiece(Color.Blue, Color.Orange, Color.White);
         private ThreeCornerPiece GreenOrangeWhite { get; } = new ThreeCornerPiece(Color.Green, Color.Orange, Color.White);
 
-        private IPice[,,] _state = new IPice[3, 3, 3];
+        private IPiece[,,] _state = new IPiece[3, 3, 3];
+
+        internal Cube(IPiece[,,] state)
+        {
+            for (int indexX = 0; indexX < 3; indexX++)            
+            {
+                for (int indexY = 0; indexY < 3; indexY++)
+                {
+                    for (int indexZ = 0; indexZ < 3; indexZ++)
+                    {
+                        _state[indexX, indexY, indexZ] = state[indexX, indexY, indexZ];
+                    }
+                }
+            }
+        }
     }
 }
