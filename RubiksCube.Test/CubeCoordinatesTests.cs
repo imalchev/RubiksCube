@@ -46,6 +46,31 @@ namespace RubiksCube.Test
         }
 
         [Theory]
+        [InlineData(1, 1, 0)]
+        [InlineData(1, 1, 2)]
+        [InlineData(1, 0, 1)]
+        [InlineData(1, 2, 1)]
+        [InlineData(0, 1, 1)]
+        [InlineData(2, 1, 1)]
+        public void HasOneOuterTale_ShouldReturnTrue(int x, int y, int z)
+        {
+            CubeCoordinates coordinate = (x, y, z);
+
+            Assert.True(coordinate.HasOneOuterTale);
+        }
+
+        [Theory]
+        [InlineData(1, 1, 1)]
+        [InlineData(1, 2, 2)]
+        [InlineData(2, 2, 2)]        
+        public void HasOneOuterTale_ShouldReturnFalse(int x, int y, int z)
+        {
+            CubeCoordinates coordinate = (x, y, z);
+
+            Assert.False(coordinate.HasOneOuterTale);
+        }
+
+        [Theory]
         [InlineData(1, 0, 0)]
         [InlineData(2, 0, 1)]
         [InlineData(1, 0, 2)]
@@ -53,11 +78,11 @@ namespace RubiksCube.Test
         [InlineData(0, 1, 0)]
         [InlineData(2, 1, 0)]
         [InlineData(2, 1, 2)]
-        public void IsTwoColors_Should_ReturnTrue(int x, int y, int z)
+        public void HasTwoOuterTales_ShouldReturnTrue(int x, int y, int z)
         {
             CubeCoordinates coordinate = (x, y, z);
 
-            Assert.True(coordinate.IsTwoColors);
+            Assert.True(coordinate.HasTwoOuterTales);
         }
 
         [Theory]
@@ -67,11 +92,11 @@ namespace RubiksCube.Test
         [InlineData(0, 1, 1)]
         [InlineData(1, 1, 1)]
         [InlineData(2, 0, 2)]
-        public void IsTwoColors_Should_ReturnFalse(int x, int y, int z)
+        public void HasTwoOuterTales_ShouldReturnFalse(int x, int y, int z)
         {
             CubeCoordinates coordinate = (x, y, z);
 
-            Assert.False(coordinate.IsTwoColors);
+            Assert.False(coordinate.HasTwoOuterTales);
         }
 
         [Theory]
@@ -80,24 +105,22 @@ namespace RubiksCube.Test
         [InlineData(2, 0, 2)]
         [InlineData(0, 0, 2)]
         [InlineData(0, 2, 0)]
-        public void IsThreeColors_Should_ReturnTrue(int x, int y, int z)
+        public void HasThreeOuterTales_ShouldReturnTrue(int x, int y, int z)
         {
             CubeCoordinates coordinate = (x, y, z);
 
-            Assert.True(coordinate.IsThreeColors);
+            Assert.True(coordinate.HasThreeOuterTales);
         }
 
         [Theory]
         [InlineData(1, 0, 0)]
         [InlineData(1, 1, 0)]
-        [InlineData(1, 0, 0)]
-        [InlineData(1, 0, 0)]
         [InlineData(1, 1, 1)]
-        public void IsThreeColors_Should_ReturnFalse(int x, int y, int z)
+        public void HasThreeOuterTales_ShouldReturnFalse(int x, int y, int z)
         {
             CubeCoordinates coordinate = (x, y, z);
 
-            Assert.False(coordinate.IsThreeColors);
+            Assert.False(coordinate.HasThreeOuterTales);
         }
 
         [Fact]
@@ -111,7 +134,7 @@ namespace RubiksCube.Test
             Assert.True(firstCoordinate.Equals(secondCoordinate));
         }
 
-         [Fact]
+        [Fact]
         public void Equals_Should_BeFalse_WhenComparingDifferentObjectsWithDifferentValues()
         {
             // Arrange

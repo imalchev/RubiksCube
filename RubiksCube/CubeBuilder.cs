@@ -18,20 +18,20 @@ namespace RubiksCube
             _state = new IPiece[3, 3, 3];
 
             // initialize centers of all the walls
-            _state[1, 0, 1] = new CentralPiece(Color.Yellow);   // opposite to White 
-            _state[1, 2, 1] = new CentralPiece(Color.White);    // opposite to Yellow
+            _state[1, 0, 1] = Pieces.Yellow;   // opposite to White 
+            _state[1, 2, 1] = Pieces.White;    // opposite to Yellow
 
-            _state[1, 1, 0] = new CentralPiece(Color.Red);      // opposite to Orange
-            _state[1, 1, 2] = new CentralPiece(Color.Orange);   // opposite to Red
+            _state[1, 1, 0] = Pieces.Red;      // opposite to Orange
+            _state[1, 1, 2] = Pieces.Orange;   // opposite to Red
 
-            _state[0, 1, 1] = new CentralPiece(Color.Green);    // opposite to Blue
-            _state[2, 1, 1] = new CentralPiece(Color.Blue);     // opposite to Green
+            _state[0, 1, 1] = Pieces.Green;    // opposite to Blue
+            _state[2, 1, 1] = Pieces.Blue;     // opposite to Green
         }
 
         /// <summary>
-        /// Adds a piece to the cube if it is not being added alredy.
+        /// Adds a piece to the cube if it is not being added already.
         /// <summary>
-        public CubeBuilder AddPiece(TwoCornerPiece piece, CubeCoordinates coordinate)
+        public CubeBuilder AddPiece(CubeCoordinates coordinate, TwoCornerPiece piece)
         {
             var pieceAlreadyInTheCube = _state.AsEnumerable().Any(x => x.Equals(piece));
             if (pieceAlreadyInTheCube)
@@ -39,7 +39,7 @@ namespace RubiksCube
                 throw new ArgumentException("This piece is in the cube already!", nameof(piece));
             }
 
-            if (!coordinate.IsTwoColors)
+            if (!coordinate.HasTwoOuterTales)
             {
                 throw new ArgumentException(
                     $"The provided coordinate is not valid place for putting {nameof(TwoCornerPiece)}!",
@@ -52,9 +52,9 @@ namespace RubiksCube
         }
 
         /// <summary>
-        /// Adds a piece to the cube if it is not being added alredy.
+        /// Adds a piece to the cube if it is not being added already.
         /// <summary>
-        public CubeBuilder AddPiece(ThreeCornerPiece piece, CubeCoordinates coordinate)
+        public CubeBuilder AddPiece(CubeCoordinates coordinate, ThreeCornerPiece piece)
         {
             var pieceAlreadyInTheCube = _state.AsEnumerable().Any(x => x.Equals(piece));
             if (pieceAlreadyInTheCube)
@@ -62,7 +62,7 @@ namespace RubiksCube
                 throw new ArgumentException("This piece is in the cube already!", nameof(piece));
             }
 
-            if (!coordinate.IsThreeColors)
+            if (!coordinate.HasThreeOuterTales)
             {
                 throw new ArgumentException(
                     $"The provided coordinate is not valid place for putting {nameof(ThreeCornerPiece)}!",
@@ -90,7 +90,7 @@ namespace RubiksCube
         public IEnumerable<CubeCoordinates> GetEmptyPlaces() => _state.EnumerateEmptySpaces();
 
         /// <summary>
-        /// 
+        /// Builds the cube only if all the pieces are set!
         /// </summary>
         public Cube Build()
         {

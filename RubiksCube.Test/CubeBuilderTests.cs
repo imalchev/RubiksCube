@@ -33,7 +33,7 @@ namespace RubiksCube.Test
             var coordinate = new CubeCoordinates(1, 2, 0);
 
             // Act
-            builder.AddPiece(new TwoCornerPiece(Color.White, Color.Red), coordinate);
+            builder.AddPiece(coordinate, new TwoCornerPiece(Color.White, Color.Red));
 
             // Assert            
             Assert.Equal(27 - 1 - 6 - 1, builder.EmptyPieceSpaces);
@@ -44,7 +44,7 @@ namespace RubiksCube.Test
         [InlineData(0, 0, 0)]   // three corner piece
         [InlineData(1, 1, 1)]   // center of the cube
         [InlineData(1, 1, 0)]   // center of a wall
-        public void AddTwoCornerPiece_ThrowsArgumentExcepotion_WhenCoordinateIsInvalid(int x, int y, int z)
+        public void AddTwoCornerPiece_ThrowsArgumentException_WhenCoordinateIsInvalid(int x, int y, int z)
         {
             // Arrange
             var builder = CubeBuilder.CreateEmpty();
@@ -52,7 +52,7 @@ namespace RubiksCube.Test
 
             // Act & Assert
             Assert.Throws<ArgumentException>(
-                () => builder.AddPiece(new TwoCornerPiece(Color.White, Color.Red), coordinate));
+                () => builder.AddPiece(coordinate, new TwoCornerPiece(Color.White, Color.Red)));
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace RubiksCube.Test
             var coordinate = new CubeCoordinates(0, 0, 0);
 
             // Act
-            builder.AddPiece(new ThreeCornerPiece(Color.White, Color.Red, Color.Blue), coordinate);
+            builder.AddPiece(coordinate, new ThreeCornerPiece(Color.White, Color.Red, Color.Blue));
 
             // Assert
             Assert.Equal(27 - 1 - 6 - 1, builder.EmptyPieceSpaces);
@@ -74,7 +74,7 @@ namespace RubiksCube.Test
         [InlineData(0, 1, 0)] // two corner piece
         [InlineData(1, 1, 1)] // center of the cube
         [InlineData(1, 1, 0)] // center
-        public void AddThreeCornerPiece_ThrowsArgumentExcepotion_WhenCoordinateIsInvalid(int x, int y, int z)
+        public void AddThreeCornerPiece_ThrowsArgumentException_WhenCoordinateIsInvalid(int x, int y, int z)
         {
             // Arrange
             var builder = CubeBuilder.CreateEmpty();
@@ -82,7 +82,17 @@ namespace RubiksCube.Test
 
             // Act & Assert
             Assert.Throws<ArgumentException>(
-                () => builder.AddPiece(new ThreeCornerPiece(Color.White, Color.Red, Color.Blue), coordinate));
+                () => builder.AddPiece(coordinate, new ThreeCornerPiece(Color.White, Color.Red, Color.Blue)));
+        }
+
+        [Fact]
+        public void Build_ShouldBuildCubeSuccessfully()
+        {
+            // Arrange
+            var builder = CubeBuilder.CreateEmpty();
+            
+            builder.AddPiece((0, 0, 0), Pieces.RedBlueWhite);
+            builder.AddPiece((1, 0, 0), Pieces.BlueWhite);
         }
     }
 }

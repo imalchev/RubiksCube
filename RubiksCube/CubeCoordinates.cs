@@ -4,8 +4,6 @@ namespace RubiksCube
 {
     public class CubeCoordinates : IEquatable<CubeCoordinates>
     {
-        public static CubeCoordinates Center = new CubeCoordinates(1, 1, 1);
-
         public int X { get; } 
         public int Y { get; }
         public int Z { get; }
@@ -35,9 +33,20 @@ namespace RubiksCube
         public static implicit operator CubeCoordinates((int, int, int) tuple) 
             => new CubeCoordinates(tuple.Item1, tuple.Item2, tuple.Item3);
 
-        public bool IsTwoColors => (X % 2) + (Y % 2) + (Z % 2) == 1;
+        /// <summary>
+        /// Does that coordinates have 1 outer wall
+        /// </summary>
+        public bool HasOneOuterTale => (X % 2) + (Y % 2) + (Z % 2) == 2;
 
-        public bool IsThreeColors => 
+        /// <summary>
+        /// Does that coordinates have 2 outer walls
+        /// </summary>
+        public bool HasTwoOuterTales => (X % 2) + (Y % 2) + (Z % 2) == 1;
+
+        /// <summary>
+        /// Does that coordinates have 3 outer walls
+        /// </summary>
+        public bool HasThreeOuterTales => 
             X % 2 == 0 
             && Y % 2 == 0 
             && Z % 2 == 0;
@@ -65,7 +74,7 @@ namespace RubiksCube
         {
             if (ReferenceEquals(coordinates1, null))
             {
-                if(ReferenceEquals(coordinates2, null))
+                if (ReferenceEquals(coordinates2, null))
                 {
                     return true;
                 }
