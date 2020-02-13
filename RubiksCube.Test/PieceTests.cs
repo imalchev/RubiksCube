@@ -1,15 +1,14 @@
-using RubiksCube;
 using Xunit;
 
 namespace RubiksCube.Test
 {
-    public class CentralPieceTests
+    public class PieceTests
     {
         [Fact]
-        public void Ctor_Works()
+        public void CentralPiece_Works()
         {
             // Arrange & Act
-            var piece = new CentralPiece(Color.Blue);
+            var piece = Piece.CentralPiece(Color.Blue);
 
             // Assert
             Assert.Equal(Color.Blue, piece.Tale1);
@@ -19,7 +18,7 @@ namespace RubiksCube.Test
         public void GetHashCode_ReturnsColorsValue()
         {
             // Arrange
-            var piece = new CentralPiece(Color.Blue);
+            var piece = Piece.CentralPiece(Color.Blue);
 
             // Act & Assert
             Assert.Equal((int)Color.Blue, piece.GetHashCode());
@@ -29,8 +28,8 @@ namespace RubiksCube.Test
         public void Equals_ReturnsTrue_WhenComparedWithDifferentObjectWithSameValues()
         {
             // Arrange
-            var piece1 = new CentralPiece(Color.Blue);
-            var piece2 = new CentralPiece(Color.Blue);
+            var piece1 = Piece.CentralPiece(Color.Blue);
+            var piece2 = Piece.CentralPiece(Color.Blue);
 
             // Act & Assert
             Assert.True(piece1.Equals(piece2));
@@ -40,8 +39,8 @@ namespace RubiksCube.Test
         public void Equals_ReturnsFalse_WhenComparedWithDifferentObjectWithDifferentValues()
         {
             // Arrange
-            var piece1 = new CentralPiece(Color.Blue);
-            var piece2 = new CentralPiece(Color.Red);
+            var piece1 = Piece.CentralPiece(Color.Blue);
+            var piece2 = Piece.CentralPiece(Color.Red);
 
             // Act & Assert
             Assert.False(piece1.Equals(piece2));

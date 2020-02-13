@@ -24,9 +24,9 @@ namespace RubiksCube
 
     public class Cube
     {
-        private IPiece[,,] _state = new IPiece[3, 3, 3];
+        private Piece[,,] _state = new Piece[3, 3, 3];
 
-        internal Cube(IPiece[,,] state)
+        internal Cube(Piece[,,] state)
         {
             _state = CopyState(state);
         }
@@ -55,13 +55,22 @@ namespace RubiksCube
             }
 
             var result = new Color[3, 3];
-            if (centerCoordinate.X == 0 || centerCoordinate.X == 2)
+            
+            for (int index1 = 0; index1 < 3; index1++)
             {
-                for (int index1 = 0; index1 < 3; index1++)            
+                for (int index2 = 0; index2 < 3; index2++)
                 {
-                    for (int index2 = 0; index2 < 3; index2++)
-                    {                        
-                        result[index1, index2] = _state[centerCoordinate.X, index1, index2].GetColor(Orientation.X);
+                    if (centerCoordinate.X == 0 || centerCoordinate.X == 2)
+                    {
+                        result[index1, index2] = _state[centerCoordinate.X, index1, index2].Tale1;
+                    }
+                    else if(centerCoordinate.Y == 0 || centerCoordinate.Y == 2)
+                    {
+                        result[index1, index2] = _state[index1, centerCoordinate.Y, index2].Tale2;
+                    }
+                    else if(centerCoordinate.Z == 0 || centerCoordinate.Z == 2)
+                    {
+                        result[index1, index2] = _state[index1, index2, centerCoordinate.Z].Tale3;
                     }
                 }
             }
@@ -69,9 +78,9 @@ namespace RubiksCube
             return result;
         }
 
-        private IPiece[,,] CopyState(IPiece[,,] state)
+        private Piece[,,] CopyState(Piece[,,] state)
         {
-            var newState = new IPiece[3, 3, 3];
+            var newState = new Piece[3, 3, 3];
             for (int indexX = 0; indexX < 3; indexX++)            
             {
                 for (int indexY = 0; indexY < 3; indexY++)

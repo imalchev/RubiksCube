@@ -15,14 +15,14 @@ namespace RubiksCube.Test
             // Assert
             Assert.Equal(27 - 1 - 6, builder.EmptyPieceSpaces);
             
-            Assert.Equal(new CentralPiece(Color.Red), builder.GetPiece((1, 1, 0)));
-            Assert.Equal(new CentralPiece(Color.Orange), builder.GetPiece((1, 1, 2)));
+            Assert.Equal(Pieces.Red, builder.GetPiece((1, 1, 0)));
+            Assert.Equal(Pieces.Orange, builder.GetPiece((1, 1, 2)));
             
-            Assert.Equal(new CentralPiece(Color.White), builder.GetPiece((1, 2, 1)));
-            Assert.Equal(new CentralPiece(Color.Yellow), builder.GetPiece((1, 0, 1)));
+            Assert.Equal(Pieces.White, builder.GetPiece((1, 2, 1)));
+            Assert.Equal(Pieces.Yellow, builder.GetPiece((1, 0, 1)));
 
-            Assert.Equal(new CentralPiece(Color.Blue), builder.GetPiece((2, 1, 1)));
-            Assert.Equal(new CentralPiece(Color.Green), builder.GetPiece((0, 1, 1)));
+            Assert.Equal(Pieces.Blue, builder.GetPiece((2, 1, 1)));
+            Assert.Equal(Pieces.Green, builder.GetPiece((0, 1, 1)));
         }
 
         [Fact]
@@ -33,11 +33,11 @@ namespace RubiksCube.Test
             var coordinate = new CubeCoordinates(1, 2, 0);
 
             // Act
-            builder.AddPiece(coordinate, new TwoCornerPiece(Color.White, Color.Red));
+            builder.AddPiece(coordinate, Pieces.RedWhite);
 
             // Assert            
             Assert.Equal(27 - 1 - 6 - 1, builder.EmptyPieceSpaces);
-            Assert.Equal(new TwoCornerPiece(Color.White, Color.Red), builder.GetPiece((1, 2, 0)));
+            Assert.Equal(Pieces.RedWhite, builder.GetPiece((1, 2, 0)));
         }
 
         [Theory]
@@ -52,7 +52,7 @@ namespace RubiksCube.Test
 
             // Act & Assert
             Assert.Throws<ArgumentException>(
-                () => builder.AddPiece(coordinate, new TwoCornerPiece(Color.White, Color.Red)));
+                () => builder.AddPiece(coordinate, Pieces.RedWhite));
         }
 
         [Fact]
@@ -63,11 +63,11 @@ namespace RubiksCube.Test
             var coordinate = new CubeCoordinates(0, 0, 0);
 
             // Act
-            builder.AddPiece(coordinate, new ThreeCornerPiece(Color.White, Color.Red, Color.Blue));
+            builder.AddPiece(coordinate, Pieces.RedBlueWhite);
 
             // Assert
             Assert.Equal(27 - 1 - 6 - 1, builder.EmptyPieceSpaces);
-            Assert.Equal(new ThreeCornerPiece(Color.White, Color.Red, Color.Blue), builder.GetPiece((0, 0, 0)));
+            Assert.Equal(Pieces.RedBlueWhite, builder.GetPiece((0, 0, 0)));
         }
 
         [Theory]
@@ -82,7 +82,7 @@ namespace RubiksCube.Test
 
             // Act & Assert
             Assert.Throws<ArgumentException>(
-                () => builder.AddPiece(coordinate, new ThreeCornerPiece(Color.White, Color.Red, Color.Blue)));
+                () => builder.AddPiece(coordinate, Pieces.RedBlueWhite));
         }
 
         [Fact]
@@ -91,8 +91,31 @@ namespace RubiksCube.Test
             // Arrange
             var builder = CubeBuilder.CreateEmpty();
             
-            builder.AddPiece((0, 0, 0), Pieces.RedBlueWhite);
-            builder.AddPiece((1, 0, 0), Pieces.BlueWhite);
+            builder.AddPiece((0, 0, 0), Pieces.YellowRedGreen);
+            builder.AddPiece((1, 0, 0), Pieces.YellowRed);
+            builder.AddPiece((2, 0, 0), Pieces.YellowRedBlue);
+            builder.AddPiece((0, 1, 0), Pieces.RedGreen);
+            builder.AddPiece((2, 1, 0), Pieces.RedBlue);
+            builder.AddPiece((0, 2, 0), Pieces.RedGreenWhite);
+            builder.AddPiece((1, 2, 0), Pieces.RedWhite);
+            builder.AddPiece((2, 2, 0), Pieces.RedBlueWhite);
+            
+            builder.AddPiece((0, 0, 1), Pieces.YellowGreen);
+            builder.AddPiece((2, 0, 1), Pieces.YellowBlue);
+            builder.AddPiece((0, 0, 2), Pieces.YellowGreenOrange);
+            builder.AddPiece((1, 0, 2), Pieces.YellowOrange);
+            builder.AddPiece((1, 2, 2), Pieces.OrangeWhite);
+            builder.AddPiece((2, 0, 2), Pieces.YellowBlueOrange);
+            
+            builder.AddPiece((0, 1, 2), Pieces.GreenOrange);
+            builder.AddPiece((0, 2, 2), Pieces.GreenOrangeWhite);
+            builder.AddPiece((0, 2, 1), Pieces.GreenWhite);
+
+            builder.AddPiece((2, 2, 1), Pieces.BlueWhite);
+            builder.AddPiece((2, 2, 2), Pieces.BlueOrangeWhite);
+            builder.AddPiece((2, 1, 2), Pieces.BlueOrange);
+
+            Cube cube = builder.Build();
         }
     }
 }

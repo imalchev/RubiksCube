@@ -5,6 +5,7 @@ namespace RubiksCube
     [Flags]
     public enum Color
     {
+        None = 0,
         White =     1 << 0,
         Green =     1 << 1,
         Orange =    1 << 2,
@@ -16,144 +17,103 @@ namespace RubiksCube
     [Flags]
     public enum Orientation
     {
-        X = 2 << 0,
-        Y = 2 << 1,
-        Z = 2 << 2,
-    }
-
-    public enum ThreeTaleOrientation
-    {
-        /// <summary>
-        /// Tale1 is on X axis, Tale2 is on Y axis, Tale3 is on Z axis
-        /// </summary>
-        XYZ = 1,
-
-        /// <summary>
-        /// Tale1 is on X axis, Tale2 is on Z axis, Tale3 is on Y axis
-        /// </summary>
-        XZY = 2,
-
-        /// <summary>
-        /// Tale1 is on Y axis, Tale2 is on X axis, Tale3 is on Z axis
-        /// </summary>
-        YXZ = 3,
-
-        /// <summary>
-        /// Tale1 is on Y axis, Tale2 is on Z axis, Tale3 is on X axis
-        /// </summary>
-        YZX = 4,
-
-        /// <summary>
-        /// Tale1 is on Z axis, Tale2 is on X axis, Tale3 is on Y axis
-        /// </summary>
-        ZXY = 5,
-
-        /// <summary>
-        /// Tale1 is on Z axis, Tale2 is on Y axis, Tale3 is on X axis
-        /// </summary>
-        ZYX = 6
+        X = 1 << 0,
+        Y = 1 << 1,
+        Z = 1 << 2,
     }
 
     public static class Pieces
     {
-        public static CentralPiece Yellow { get; } = new CentralPiece(Color.Yellow);
-        public static CentralPiece Red { get; } = new CentralPiece(Color.Red);
-        public static CentralPiece Blue { get; } = new CentralPiece(Color.Blue);
-        public static CentralPiece Green { get; } = new CentralPiece(Color.Green);
-        public static CentralPiece White { get; } = new CentralPiece(Color.White);
-        public static CentralPiece Orange { get; } = new CentralPiece(Color.Orange);
+        public static Piece Yellow { get; } = Piece.CentralPiece(Color.Yellow);
+        public static Piece Red { get; } = Piece.CentralPiece(Color.Red);
+        public static Piece Blue { get; } = Piece.CentralPiece(Color.Blue);
+        public static Piece Green { get; } = Piece.CentralPiece(Color.Green);
+        public static Piece White { get; } = Piece.CentralPiece(Color.White);
+        public static Piece Orange { get; } = Piece.CentralPiece(Color.Orange);
 
-        public static TwoCornerPiece YellowRed { get; } = new TwoCornerPiece(Color.Yellow, Color.Red);
-        public static TwoCornerPiece YellowGreen { get; } = new TwoCornerPiece(Color.Yellow, Color.Green);
-        public static TwoCornerPiece YellowBlue { get; } = new TwoCornerPiece(Color.Yellow, Color.Blue);
-        public static TwoCornerPiece YellowOrange { get; } = new TwoCornerPiece(Color.Yellow, Color.Orange);
-        public static TwoCornerPiece RedGreen { get; } = new TwoCornerPiece(Color.Red, Color.Green);
-        public static TwoCornerPiece RedBlue { get; } = new TwoCornerPiece(Color.Red, Color.Blue);
-        public static TwoCornerPiece RedWhite { get; } = new TwoCornerPiece(Color.Red, Color.White);
-        public static TwoCornerPiece BlueWhite { get; } = new TwoCornerPiece(Color.Blue, Color.White);
-        public static TwoCornerPiece BlueOrange { get; } = new TwoCornerPiece(Color.Blue, Color.Orange);
-        public static TwoCornerPiece GreenOrange { get; } = new TwoCornerPiece(Color.Green, Color.Orange);
-        public static TwoCornerPiece GreenWhite { get; } = new TwoCornerPiece(Color.Green, Color.White);
-        public static TwoCornerPiece OrangeWhite { get; } = new TwoCornerPiece(Color.Orange, Color.White);
+        public static Piece YellowRed { get; } = Piece.TwoCornerPiece(Color.Yellow, Color.Red);
+        public static Piece YellowGreen { get; } = Piece.TwoCornerPiece(Color.Yellow, Color.Green);
+        public static Piece YellowBlue { get; } = Piece.TwoCornerPiece(Color.Yellow, Color.Blue);
+        public static Piece YellowOrange { get; } = Piece.TwoCornerPiece(Color.Yellow, Color.Orange);
+        public static Piece RedGreen { get; } = Piece.TwoCornerPiece(Color.Red, Color.Green);
+        public static Piece RedBlue { get; } = Piece.TwoCornerPiece(Color.Red, Color.Blue);
+        public static Piece RedWhite { get; } = Piece.TwoCornerPiece(Color.Red, Color.White);
+        public static Piece BlueWhite { get; } = Piece.TwoCornerPiece(Color.Blue, Color.White);
+        public static Piece BlueOrange { get; } = Piece.TwoCornerPiece(Color.Blue, Color.Orange);
+        public static Piece GreenOrange { get; } = Piece.TwoCornerPiece(Color.Green, Color.Orange);
+        public static Piece GreenWhite { get; } = Piece.TwoCornerPiece(Color.Green, Color.White);
+        public static Piece OrangeWhite { get; } = Piece.TwoCornerPiece(Color.Orange, Color.White);
 
-        public static ThreeCornerPiece YellowRedBlue { get; } = new ThreeCornerPiece(Color.Yellow, Color.Red, Color.Blue);
-        public static ThreeCornerPiece YellowRedGreen { get; } = new ThreeCornerPiece(Color.Yellow, Color.Red, Color.Green);
-        public static ThreeCornerPiece YellowGreenOrange { get; } = new ThreeCornerPiece(Color.Yellow, Color.Green, Color.Orange);
-        public static ThreeCornerPiece YellowBlueOrange { get; } = new ThreeCornerPiece(Color.Yellow, Color.Blue, Color.Orange);
-        public static ThreeCornerPiece RedGreenWhite { get; } = new ThreeCornerPiece(Color.Red, Color.Green, Color.White);
-        public static ThreeCornerPiece RedBlueWhite { get; } = new ThreeCornerPiece(Color.Red, Color.Blue, Color.White);
-        public static ThreeCornerPiece BlueOrangeWhite { get; } = new ThreeCornerPiece(Color.Blue, Color.Orange, Color.White);
-        public static ThreeCornerPiece GreenOrangeWhite { get; } = new ThreeCornerPiece(Color.Green, Color.Orange, Color.White);
+        public static Piece YellowRedBlue { get; } = Piece.ThreeCornerPiece(Color.Yellow, Color.Red, Color.Blue);
+        public static Piece YellowRedGreen { get; } = Piece.ThreeCornerPiece(Color.Yellow, Color.Red, Color.Green);
+        public static Piece YellowGreenOrange { get; } = Piece.ThreeCornerPiece(Color.Yellow, Color.Green, Color.Orange);
+        public static Piece YellowBlueOrange { get; } = Piece.ThreeCornerPiece(Color.Yellow, Color.Blue, Color.Orange);
+        public static Piece RedGreenWhite { get; } = Piece.ThreeCornerPiece(Color.Red, Color.Green, Color.White);
+        public static Piece RedBlueWhite { get; } = Piece.ThreeCornerPiece(Color.Red, Color.Blue, Color.White);
+        public static Piece BlueOrangeWhite { get; } = Piece.ThreeCornerPiece(Color.Blue, Color.Orange, Color.White);
+        public static Piece GreenOrangeWhite { get; } = Piece.ThreeCornerPiece(Color.Green, Color.Orange, Color.White);
     }
 
-    public interface IPiece
+
+    public sealed class Piece : IEquatable<Piece>
     {
-        Color GetColor(Orientation orientation);
-    }
-
-    public sealed class CentralPiece : IPiece, IEquatable<CentralPiece>
-    {
-        public Color Tale1 { get; }
-
-        public CentralPiece(Color color)
-        {
-            Tale1 = color;
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)Tale1;
-        }
-
-        public override bool Equals(object? obj) => Equals(obj as CentralPiece);
-
-        public bool Equals(CentralPiece? other)
-        {
-            if (ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return Tale1 == other.Tale1;
-        }
-
-        public Color GetColor(Orientation orientation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool operator == (CentralPiece? piece1, CentralPiece? piece2)
-        {
-            if(ReferenceEquals(piece1, null))
-            {
-                if(ReferenceEquals(piece2, null))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            return piece1.Equals(piece2);
-        }
-
-        public static bool operator != (CentralPiece? piece1, CentralPiece? piece2)
-        {
-            return !(piece1 == piece2);
-        }
-    }
-
-    public sealed class TwoCornerPiece : IPiece, IEquatable<TwoCornerPiece>
-    {        
         public Color Tale1 { get; }
         public Color Tale2 { get; }
-    
-        public TwoCornerPiece(Color color1, Color color2)
+        public Color Tale3 { get; }
+
+        public static Piece CentralPiece(Color color1)
+        {
+            if (color1 == Color.None)
+            {
+                throw new ArgumentException(nameof(color1));
+            }
+
+            return new Piece(color1);
+        }
+
+        public static Piece TwoCornerPiece(Color color1, Color color2)
+        {
+            if (color1 == Color.None)
+            {
+                throw new ArgumentException(nameof(color1));
+            }
+
+            if (color2 == Color.None)
+            {
+                throw new ArgumentException(nameof(color2));
+            }
+
+            return new Piece(color1, color2);
+        }
+
+        public static Piece ThreeCornerPiece(Color color1, Color color2, Color color3)
+        {
+            if (color1 == Color.None)
+            {
+                throw new ArgumentException(nameof(color1));
+            }
+
+            if (color2 == Color.None)
+            {
+                throw new ArgumentException(nameof(color2));
+            }
+
+            if (color3 == Color.None)
+            {
+                throw new ArgumentException(nameof(color3));
+            }
+
+            return new Piece(color1, color2, color3);
+        }        
+
+        private Piece(Color color1)
+        {
+            Tale1 = color1;
+            Tale2 = Color.None;
+            Tale3 = Color.None;
+        }
+
+        private Piece(Color color1, Color color2)
         {
             if (color1 == color2)
             {
@@ -162,63 +122,10 @@ namespace RubiksCube
 
             Tale1 = color1;
             Tale2 = color2;
+            Tale3 = Color.None;
         }
-
-        public override int GetHashCode()
-        {
-            return (int)Tale1 | (int)Tale2;
-        }
-
-        public override bool Equals(object? obj) => Equals(obj as TwoCornerPiece);
-
-        public bool Equals(TwoCornerPiece? other)
-        {
-            if (ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return ((int)Tale1 | (int)Tale2) == ((int)other.Tale1 | (int)other.Tale2);
-        }
-
-        public Color GetColor(Orientation orientation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool operator == (TwoCornerPiece? piece1, TwoCornerPiece? piece2)
-        {
-            if(ReferenceEquals(piece1, null))
-            {
-                if(ReferenceEquals(piece2, null))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            return piece1.Equals(piece2);
-        }
-
-        public static bool operator != (TwoCornerPiece? piece1, TwoCornerPiece? piece2)
-        {
-            return !(piece1 == piece2);
-        }
-    }
-
-    public sealed class ThreeCornerPiece : IPiece, IEquatable<ThreeCornerPiece>
-    {
-        public Color Tale1 { get; }
-        public Color Tale2 { get; }
-        public Color Tale3 { get; }
-
-        public ThreeCornerPiece(Color color1, Color color2, Color color3)
+        
+        private Piece(Color color1, Color color2, Color color3)
         {
             if (color1 == color2)
             {
@@ -240,14 +147,29 @@ namespace RubiksCube
             Tale3 = color3;
         }
 
+        public bool HasOneOuterTale => 
+            Tale1 != Color.None
+            && Tale2 == Color.None 
+            && Tale3 == Color.None;
+
+        public bool HasTwoOuterTales => 
+            Tale1 != Color.None
+            && Tale2 != Color.None 
+            && Tale3 == Color.None;
+
+        public bool HasThreeOuterTales => 
+            Tale1 != Color.None
+            && Tale2 != Color.None 
+            && Tale3 != Color.None;
+
         public override int GetHashCode()
         {
             return (int)Tale1 | (int)Tale2 | (int)Tale3;
         }
 
-        public override bool Equals(object? obj) => Equals(obj as ThreeCornerPiece);
+        public override bool Equals(object? obj) => Equals(obj as Piece);
 
-        public bool Equals(ThreeCornerPiece? other)
+        public bool Equals(Piece? other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -262,12 +184,7 @@ namespace RubiksCube
             return ((int)Tale1 | (int)Tale2 | (int)Tale3) == ((int)other.Tale1 | (int)other.Tale2 | (int)other.Tale3);
         }
 
-        public Color GetColor(Orientation orientation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool operator == (ThreeCornerPiece? piece1, ThreeCornerPiece? piece2)
+        public static bool operator == (Piece? piece1, Piece? piece2)
         {
             if(ReferenceEquals(piece1, null))
             {
@@ -282,7 +199,7 @@ namespace RubiksCube
             return piece1.Equals(piece2);
         }
 
-        public static bool operator != (ThreeCornerPiece? piece1, ThreeCornerPiece? piece2)
+        public static bool operator != (Piece? piece1, Piece? piece2)
         {
             return !(piece1 == piece2);
         }
