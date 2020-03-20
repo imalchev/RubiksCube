@@ -63,7 +63,7 @@ namespace RubiksCube.Test
             var coordinate = new CubeCoordinates(0, 0, 0);
 
             // Act
-            builder.AddPiece(coordinate, Pieces.RedBlueWhite);
+            builder.AddPiece(coordinate, Pieces.RedBlueWhite, Orientation.RedOrange, Orientation.GreenBlue, Orientation.YellowWhite);
 
             // Assert
             Assert.Equal(27 - 1 - 6 - 1, builder.EmptyPieceSpaces);
@@ -91,29 +91,29 @@ namespace RubiksCube.Test
             // Arrange
             var builder = CubeBuilder.CreateEmpty();
             
-            builder.AddPiece((0, 0, 0), Pieces.YellowRedGreen);
-            builder.AddPiece((1, 0, 0), Pieces.YellowRed);
-            builder.AddPiece((2, 0, 0), Pieces.YellowRedBlue);
-            builder.AddPiece((0, 1, 0), Pieces.RedGreen);
-            builder.AddPiece((2, 1, 0), Pieces.RedBlue);
-            builder.AddPiece((0, 2, 0), Pieces.RedGreenWhite);
-            builder.AddPiece((1, 2, 0), Pieces.RedWhite);
-            builder.AddPiece((2, 2, 0), Pieces.RedBlueWhite);
+            builder.AddPiece((0, 0, 0), Pieces.YellowRedGreen, Orientation.YellowWhite, Orientation.RedOrange, Orientation.GreenBlue);
+            builder.AddPiece((1, 0, 0), Pieces.YellowRed, Orientation.YellowWhite, Orientation.RedOrange);
+            builder.AddPiece((2, 0, 0), Pieces.YellowRedBlue, Orientation.YellowWhite, Orientation.RedOrange, Orientation.GreenBlue);
+            builder.AddPiece((0, 1, 0), Pieces.RedGreen, Orientation.RedOrange, Orientation.GreenBlue);
+            builder.AddPiece((2, 1, 0), Pieces.RedBlue, Orientation.RedOrange, Orientation.GreenBlue);
+            builder.AddPiece((0, 2, 0), Pieces.RedGreenWhite, Orientation.RedOrange, Orientation.GreenBlue, Orientation.YellowWhite);
+            builder.AddPiece((1, 2, 0), Pieces.RedWhite, Orientation.RedOrange, Orientation.YellowWhite);
+            builder.AddPiece((2, 2, 0), Pieces.RedBlueWhite, Orientation.RedOrange, Orientation.GreenBlue, Orientation.YellowWhite);
             
-            builder.AddPiece((0, 0, 1), Pieces.YellowGreen);
-            builder.AddPiece((2, 0, 1), Pieces.YellowBlue);
-            builder.AddPiece((0, 0, 2), Pieces.YellowGreenOrange);
-            builder.AddPiece((1, 0, 2), Pieces.YellowOrange);
-            builder.AddPiece((1, 2, 2), Pieces.OrangeWhite);
-            builder.AddPiece((2, 0, 2), Pieces.YellowBlueOrange);
+            builder.AddPiece((0, 0, 1), Pieces.YellowGreen, Orientation.YellowWhite, Orientation.GreenBlue);
+            builder.AddPiece((2, 0, 1), Pieces.YellowBlue, Orientation.YellowWhite, Orientation.GreenBlue);
+            builder.AddPiece((0, 0, 2), Pieces.YellowGreenOrange, Orientation.YellowWhite, Orientation.GreenBlue, Orientation.RedOrange);
+            builder.AddPiece((1, 0, 2), Pieces.YellowOrange, Orientation.YellowWhite, Orientation.RedOrange);
+            builder.AddPiece((1, 2, 2), Pieces.OrangeWhite, Orientation.RedOrange, Orientation.YellowWhite);
+            builder.AddPiece((2, 0, 2), Pieces.YellowBlueOrange, Orientation.YellowWhite, Orientation.GreenBlue, Orientation.RedOrange);
             
-            builder.AddPiece((0, 1, 2), Pieces.GreenOrange);
-            builder.AddPiece((0, 2, 2), Pieces.GreenOrangeWhite);
-            builder.AddPiece((0, 2, 1), Pieces.GreenWhite);
+            builder.AddPiece((0, 1, 2), Pieces.GreenOrange, Orientation.GreenBlue, Orientation.RedOrange);
+            builder.AddPiece((0, 2, 2), Pieces.GreenOrangeWhite, Orientation.GreenBlue, Orientation.RedOrange, Orientation.YellowWhite);
+            builder.AddPiece((0, 2, 1), Pieces.GreenWhite, Orientation.GreenBlue, Orientation.YellowWhite);
 
-            builder.AddPiece((2, 2, 1), Pieces.BlueWhite);
-            builder.AddPiece((2, 2, 2), Pieces.BlueOrangeWhite);
-            builder.AddPiece((2, 1, 2), Pieces.BlueOrange);
+            builder.AddPiece((2, 2, 1), Pieces.BlueWhite, Orientation.GreenBlue, Orientation.YellowWhite);
+            builder.AddPiece((2, 2, 2), Pieces.BlueOrangeWhite, Orientation.GreenBlue, Orientation.RedOrange, Orientation.YellowWhite);
+            builder.AddPiece((2, 1, 2), Pieces.BlueOrange, Orientation.GreenBlue, Orientation.RedOrange);
 
             Cube cube = builder.Build();
         }

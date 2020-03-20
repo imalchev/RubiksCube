@@ -14,14 +14,33 @@ namespace RubiksCube
         Yellow =    1 << 5
     }
 
+    /// <summary>
+    /// All the valid orientations of the cube. They match the asses
+    /// </summary>
     [Flags]
     public enum Orientation
     {
-        X = 1 << 0,
-        Y = 1 << 1,
-        Z = 1 << 2,
+        None = 0,
+
+        /// <summary>
+        /// Represents the asses from red side to orange side
+        /// </summary>
+        RedOrange = 1 << 0,
+
+        /// <summary>
+        /// Represents the asses from yellow side to white side
+        /// </summary>
+        YellowWhite = 1 << 1,
+        
+        /// <summary>
+        /// Represents the asses from green side to blue side
+        /// </summary>
+        GreenBlue = 1 << 2,
     }
 
+    /// <summary>
+    /// Enumeration of all valid cube pieces
+    /// </summary>
     public static class Pieces
     {
         public static Piece Yellow { get; } = Piece.CentralPiece(Color.Yellow);

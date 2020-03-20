@@ -10,17 +10,17 @@ namespace RubiksCube
 
         public CubeCoordinates(int x, int y, int z) 
         {
-            if(x < 0 || x > 2)
+            if (x < 0 || x > 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if(y < 0 || y > 2)
+            if (y < 0 || y > 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(y));
             }
 
-            if(z < 0 || z > 2)
+            if (z < 0 || z > 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(y));
             }

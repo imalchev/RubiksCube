@@ -7,7 +7,7 @@ namespace RubiksCube
         /// <summary>
         /// Enumerates all the populated visible pieces of the cube.
         /// <summary>
-        public static IEnumerable<Piece> AsEnumerable(this Piece[,,] pieces)
+        public static IEnumerable<T> AsEnumerable<T>(this T[,,] pieces)
         {
             for (int indexX = 0; indexX < 3; indexX++)
             {
@@ -33,7 +33,7 @@ namespace RubiksCube
         /// <summary>
         /// Enumerates all empty (non-populated) visible pieces of the cube.
         /// <summary>
-        public static IEnumerable<CubeCoordinates> EnumerateEmptySpaces(this Piece[,,] pieces)
+        public static IEnumerable<CubeCoordinates> EnumerateEmptySpaces(this CubePiece[,,] pieces)
         {
             for (int indexX = 0; indexX < 3; indexX++)
             {
