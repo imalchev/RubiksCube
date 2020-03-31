@@ -54,6 +54,9 @@ namespace RubiksCube
             return new Cube(newState);
         }
 
+        /// <summary>
+        /// Gets enumerable of the source indexes that change when rotating a cube side.
+        /// </summary>
         private IEnumerable<(int Index1, int Index2)> GetRotationIndexes()
         {
             yield return (0, 0);
@@ -68,6 +71,9 @@ namespace RubiksCube
             yield return (2, 2);
         }
 
+        /// <summary>
+        /// Gets a tuple of cube indexes that change on rotation of the cube base on turnovers count.
+        /// </summary>
         private (int, int) RotateIndexes((int index1, int index2) indexes, int turnovers)
         {
             if (turnovers < 0 || turnovers >= 4)
@@ -153,7 +159,7 @@ namespace RubiksCube
             {
                 if (sourceTale == Orientation.GreenBlue)
                 {                     
-                    return Orientation.GreenBlue;
+                    return Orientation.YellowWhite;
                 }
                 else
                 {
