@@ -42,6 +42,33 @@ swapped and benchmarked against each other. Planned/implemented approaches:
 
 The first two (bidirectional BFS and IDA*) are the initial implementations.
 
+## CLI
+
+`RubiksCube.Cli` is an interactive REPL for experimenting with a cube by hand: initialize it into
+some state, print it out in full, and apply rotations one at a time to watch the state change.
+
+```
+dotnet run --project src/RubiksCube.Cli
+```
+
+Commands:
+
+- `init` — wizard to initialize the cube as solved, scrambled with N random moves, or from a typed
+  move sequence.
+- `show` (alias `s`) — prints the cube as one big matrix: an opened-up box with all 6 sides visible
+  at once, every tile shown as its `(x,y,z)` coordinate plus its color, laid out as the standard
+  unfolded cross (White/Yellow above/below as up/down — `Y=2` is up, `Y=0` is down — with
+  Green/Red/Blue/Orange side by side as left/front/right/back).
+- `rotate` (alias `r`) `<move...>` — applies one or more moves, e.g. `rotate Red Blue' Green2`.
+- `history` — lists the moves applied since the last `init`.
+- `help`, `exit` / `quit`.
+
+Moves are written as `<ColorName>[modifier]` (case-insensitive): a face's center color — `Red`,
+`Orange`, `Yellow`, `White`, `Green`, or `Blue` — optionally followed by `'` for the inverse quarter
+turn or `2` for a half turn. Color names are used instead of the usual Up/Down/Front/Back/Left/Right
+letters because this project identifies faces by color, and a letter like "R" would otherwise be
+ambiguous (Right vs. Red).
+
 ## Build & test
 
 ```
