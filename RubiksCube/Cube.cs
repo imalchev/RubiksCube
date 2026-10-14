@@ -13,6 +13,9 @@ namespace RubiksCube
             _state = state; // CopyState(state);
         }
 
+        /// <summary>
+        /// Rotates the cube based on the <param name="command" />.
+        /// </summary>
         public Cube Rotate(RotationCommand command)
         {
             var newState = CopyState(_state);
@@ -190,6 +193,16 @@ namespace RubiksCube
             }
         }
         
+        /// <summary>
+        /// Gets the piece currently placed at <paramref name="coordinate" />.
+        /// </summary>
+        public CubePiece GetCubePiece(CubeCoordinates coordinate) => _state[coordinate.X, coordinate.Y, coordinate.Z];
+
+        /// <summary>
+        /// Gets the unique identifier of this cube's state, usable as a graph vertex key.
+        /// </summary>
+        public CubeStateId GetStateId() => CubeStateId.Of(this);
+
         public Color[,] GetSideColors(Color centerColor)
         {
             switch (centerColor)

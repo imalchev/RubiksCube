@@ -5,17 +5,20 @@ namespace RubiksCube
     [Flags]
     public enum Color
     {
-        None = 0,
-        White =     1 << 0,
-        Green =     1 << 1,
-        Orange =    1 << 2,
-        Blue =      1 << 3,
-        Red =       1 << 4,
-        Yellow =    1 << 5
+        None = 0,           // 00000000
+        
+        White =     1 << 0, // 00000001
+        Yellow =    1 << 1, // 00000010
+
+        Green =     1 << 2, // 00000100
+        Blue =      1 << 3, // 00001000
+
+        Red =       1 << 4, // 00010000
+        Orange =    1 << 5, // 00100000
     }
 
     /// <summary>
-    /// All the valid orientations of the cube. They match the asses
+    /// All the valid orientations of the cube. They match the axes of the cube as well.
     /// </summary>
     [Flags]
     public enum Orientation
@@ -25,17 +28,17 @@ namespace RubiksCube
         /// <summary>
         /// Represents the asses from red side to orange side
         /// </summary>
-        RedOrange = 1 << 0,
+        RedOrange = Color.Red | Color.Orange,
 
         /// <summary>
         /// Represents the asses from yellow side to white side
         /// </summary>
-        YellowWhite = 1 << 1,
+        YellowWhite = Color.Yellow | Color.White,
         
         /// <summary>
         /// Represents the asses from green side to blue side
         /// </summary>
-        GreenBlue = 1 << 2,
+        GreenBlue = Color.Green | Color.Blue,
     }
 
     /// <summary>
@@ -71,6 +74,18 @@ namespace RubiksCube
         public static Piece RedBlueWhite { get; } = Piece.ThreeCornerPiece(Color.Red, Color.Blue, Color.White);
         public static Piece BlueOrangeWhite { get; } = Piece.ThreeCornerPiece(Color.Blue, Color.Orange, Color.White);
         public static Piece GreenOrangeWhite { get; } = Piece.ThreeCornerPiece(Color.Green, Color.Orange, Color.White);
+
+        /// <summary>
+        /// All 20 movable (non-central) pieces, in a fixed, stable order used to index them.
+        /// </summary>
+        public static Piece[] All { get; } = new[]
+        {
+            YellowRed, YellowGreen, YellowBlue, YellowOrange,
+            RedGreen, RedBlue, RedWhite, BlueWhite, BlueOrange, GreenOrange, GreenWhite, OrangeWhite,
+
+            YellowRedBlue, YellowRedGreen, YellowGreenOrange, YellowBlueOrange,
+            RedGreenWhite, RedBlueWhite, BlueOrangeWhite, GreenOrangeWhite
+        };
     }
 
 
