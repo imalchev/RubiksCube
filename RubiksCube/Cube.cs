@@ -203,6 +203,13 @@ namespace RubiksCube
         /// </summary>
         public CubeStateId GetStateId() => CubeStateId.Of(this);
 
+        /// <summary>
+        /// Gets every graph edge reachable from this state: one per elementary rotation
+        /// (<see cref="RotationCommand.AllMoves" />), paired with the state it leads to.
+        /// </summary>
+        public IEnumerable<(RotationCommand Move, Cube Result)> GetNeighbors() =>
+            RotationCommand.AllMoves.Select(move => (move, Rotate(move)));
+
         public Color[,] GetSideColors(Color centerColor)
         {
             switch (centerColor)
