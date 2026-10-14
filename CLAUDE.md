@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A demo C# project modeling a Rubik's cube and its rotations (`netcoreapp3.0`, nullable enabled). Two projects: `RubiksCube` (library) and `RubiksCube.Test` (xUnit tests).
+A demo C# project modeling a Rubik's cube and its rotations (`net10.0`, nullable enabled). Four projects: `RubiksCube` (library), `RubiksCube.Test` (xUnit tests), `RubiksCube.Solver` (solving algorithms) and `RubiksCube.Solver.Test` (xUnit tests).
 
 ## Commands
 
