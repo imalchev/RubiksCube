@@ -6,6 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A demo C# project modeling a Rubik's cube and its rotations (`net10.0`, nullable enabled). Four projects: `RubiksCube` (library), `RubiksCube.Test` (xUnit tests), `RubiksCube.Solver` (solving algorithms) and `RubiksCube.Solver.Test` (xUnit tests).
 
+## Workflow
+
+- Never run `git commit` unless the user's most recent prompt explicitly asks for a commit. Finishing a task, fixing a bug, or the user saying "looks good" is not consent to commit — wait for an explicit instruction in that turn.
+- Before committing, run `dotnet build RubiksCube.sln` and confirm it succeeds with no errors. If any test project exists for the changed code, also run `dotnet test RubiksCube.sln` and confirm all tests pass. Do not commit if either fails — fix the issue first.
+
 ## Commands
 
 - Build: `dotnet build RubiksCube.sln`
