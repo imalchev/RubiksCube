@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Linq;
 using RubiksCube;
 using RubiksCube.Cli;
@@ -8,6 +10,29 @@ namespace RubiksCube.Cli.Test
     public class CubeFaceRendererTests
     {
         private static Cube Solved() => CubeBuilder.CreateOrdered().Build();
+
+        [Fact]
+        public void Render_PrintsTheCubeStateIdAboveTheMatrix()
+        {
+            var cube = Solved();
+            var originalOut = Console.Out;
+            string output;
+
+            try
+            {
+                using var writer = new StringWriter();
+                Console.SetOut(writer);
+                CubeFaceRenderer.Render(cube);
+                output = writer.ToString();
+            }
+            finally
+            {
+                Console.SetOut(originalOut);
+            }
+
+            var firstLine = output.Split('\n')[0].TrimEnd('\r');
+            Assert.Equal($"State: {cube.GetStateId()}", firstLine);
+        }
 
         [Theory]
         [InlineData(Color.Red)]
@@ -89,6 +114,38 @@ namespace RubiksCube.Cli.Test
                     }
                 }
             }
+        }
+
+        [Fact]
+        public void BuildFaceGrid_TileAtACorner_HasTheCorrectPieceId()
+        {
+            // (0,0,0) on a solved cube is the green/yellow/red corner.
+            var grid = CubeFaceRenderer.BuildFaceGrid(Solved(), Color.Red);
+
+            var tile = grid.Cells.Cast<Tile>().Single(t => t.Coordinate.Equals((CubeCoordinates)(0, 0, 0)));
+
+            Assert.Equal("YGR", tile.PieceId);
+        }
+
+        [Fact]
+        public void BuildNet_SharedBorders_HaveTheSamePieceIdOnBothFaces()
+        {
+            var net = CubeFaceRenderer.BuildNet(Solved());
+
+            for (int row = 0; row < 3; row++)
+            {
+                AssertSamePieceId(net, 3 + row, 2, 3 + row, 3);
+            }
+        }
+
+        private static void AssertSamePieceId(Tile?[,] net, int row1, int col1, int row2, int col2)
+        {
+            var tile1 = net[row1, col1];
+            var tile2 = net[row2, col2];
+
+            Assert.NotNull(tile1);
+            Assert.NotNull(tile2);
+            Assert.Equal(tile1!.Value.PieceId, tile2!.Value.PieceId);
         }
 
         [Fact]

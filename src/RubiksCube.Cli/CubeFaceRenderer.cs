@@ -4,17 +4,22 @@ using RubiksCube;
 namespace RubiksCube.Cli
 {
     /// <summary>
-    /// One physical tale: the coordinate it currently sits at and the color currently showing there.
+    /// One physical tale: the coordinate it currently sits at, the color currently showing there,
+    /// and the id of the physical piece it belongs to (see <see cref="PieceIds" />) - the piece id
+    /// is what lets you track one specific piece as it moves across rotations, since the coordinate
+    /// alone only names the slot, not which piece currently occupies it.
     /// </summary>
     public readonly struct Tile
     {
         public CubeCoordinates Coordinate { get; }
         public Color Color { get; }
+        public string PieceId { get; }
 
-        public Tile(CubeCoordinates coordinate, Color color)
+        public Tile(CubeCoordinates coordinate, Color color, string pieceId)
         {
             Coordinate = coordinate;
             Color = color;
+            PieceId = pieceId;
         }
     }
 
@@ -52,10 +57,15 @@ namespace RubiksCube.Cli
     /// i.e. the two tales of one physical piece. E.g. Green's rightmost column and Red's leftmost
     /// column are both the (0,y,0) edge, cell for cell; White's bottom row and Red's top row are both
     /// the (x,2,0) edge.
+    ///
+    /// <see cref="Render" /> also prints the cube's <see cref="CubeStateId" /> above the matrix, so
+    /// two prints can be compared (or looked up in a <see cref="CubeGraph" />) without eyeballing
+    /// all 54 tiles.
     /// </summary>
     public static class CubeFaceRenderer
     {
-        private const int CellWidth = 9;
+        // Longest cell: "(2,2,2)W GYR" (coordinate + current color letter + 3-letter piece id).
+        private const int CellWidth = 13;
 
         private static readonly (Color Face, int RowBlock, int ColBlock)[] Layout =
         {
@@ -93,8 +103,10 @@ namespace RubiksCube.Cli
                 for (int col = 0; col < 3; col++)
                 {
                     var coordinate = CoordinateAt(faceCenter, row, col);
-                    var color = cube.GetCubePiece(coordinate).GetColor(axis);
-                    cells[row, col] = new Tile(coordinate, color);
+                    var cubePiece = cube.GetCubePiece(coordinate);
+                    var color = cubePiece.GetColor(axis);
+                    var pieceId = PieceIds.GetId(cubePiece.Piece);
+                    cells[row, col] = new Tile(coordinate, color, pieceId);
                 }
             }
 
@@ -125,12 +137,13 @@ namespace RubiksCube.Cli
             return net;
         }
 
+        private const string AnsiReset = "\x1b[0m";
+
         public static void Render(Cube cube)
         {
-            var net = BuildNet(cube);
+            Console.WriteLine($"State: {cube.GetStateId()}");
 
-            var originalBackground = Console.BackgroundColor;
-            var originalForeground = Console.ForegroundColor;
+            var net = BuildNet(cube);
 
             for (int row = 0; row < net.GetLength(0); row++)
             {
@@ -144,13 +157,13 @@ namespace RubiksCube.Cli
                     }
                     else
                     {
-                        var (coordinate, color) = (tile.Value.Coordinate, tile.Value.Color);
+                        var (coordinate, color, pieceId) = (tile.Value.Coordinate, tile.Value.Color, tile.Value.PieceId);
+                        var text = $"({coordinate.X},{coordinate.Y},{coordinate.Z}){CubeColors.Abbreviate(color)} {pieceId}".PadRight(CellWidth);
 
-                        Console.BackgroundColor = ToConsoleColor(color);
-                        Console.ForegroundColor = ForegroundFor(color);
-                        Console.Write($"({coordinate.X},{coordinate.Y},{coordinate.Z}){Abbreviate(color)}".PadRight(CellWidth));
-                        Console.BackgroundColor = originalBackground;
-                        Console.ForegroundColor = originalForeground;
+                        Console.Write(Background(color));
+                        Console.Write(Foreground(color));
+                        Console.Write(text);
+                        Console.Write(AnsiReset);
                     }
                 }
 
@@ -158,29 +171,35 @@ namespace RubiksCube.Cli
             }
         }
 
-        private static char Abbreviate(Color color) => color switch
+        /// <summary>
+        /// The real-world approximate RGB for each cube color. The standard 16-color console
+        /// palette has no orange at all (the closest built-in options, DarkYellow/DarkRed, both get
+        /// confused with Yellow/Red in common terminal themes), so colors are written as true-color
+        /// (24-bit) ANSI escape sequences instead of <see cref="ConsoleColor" />.
+        /// </summary>
+        private static (byte R, byte G, byte B) Rgb(Color color) => color switch
         {
-            Color.White => 'W',
-            Color.Yellow => 'Y',
-            Color.Red => 'R',
-            Color.Orange => 'O',
-            Color.Green => 'G',
-            Color.Blue => 'B',
-            _ => '?',
+            Color.White => (255, 255, 255),
+            Color.Yellow => (255, 213, 0),
+            Color.Red => (196, 30, 58),
+            Color.Orange => (255, 88, 0),
+            Color.Green => (0, 155, 72),
+            Color.Blue => (0, 81, 186),
+            _ => (128, 128, 128),
         };
 
-        private static ConsoleColor ToConsoleColor(Color color) => color switch
+        private static string Background(Color color)
         {
-            Color.White => ConsoleColor.White,
-            Color.Yellow => ConsoleColor.Yellow,
-            Color.Red => ConsoleColor.Red,
-            Color.Orange => ConsoleColor.DarkYellow,
-            Color.Green => ConsoleColor.Green,
-            Color.Blue => ConsoleColor.Blue,
-            _ => ConsoleColor.Gray,
-        };
+            var (r, g, b) = Rgb(color);
+            return $"\x1b[48;2;{r};{g};{b}m";
+        }
 
-        private static ConsoleColor ForegroundFor(Color color) =>
-            color == Color.Blue || color == Color.Red ? ConsoleColor.White : ConsoleColor.Black;
+        private static string Foreground(Color color)
+        {
+            var (r, g, b) = color == Color.Red || color == Color.Green || color == Color.Blue
+                ? ((byte)255, (byte)255, (byte)255)
+                : ((byte)0, (byte)0, (byte)0);
+            return $"\x1b[38;2;{r};{g};{b}m";
+        }
     }
 }

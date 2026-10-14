@@ -55,10 +55,14 @@ Commands:
 
 - `init` — wizard to initialize the cube as solved, scrambled with N random moves, or from a typed
   move sequence.
-- `show` (alias `s`) — prints the cube as one big matrix: an opened-up box with all 6 sides visible
-  at once, every tile shown as its `(x,y,z)` coordinate plus its color, laid out as the standard
-  unfolded cross (White/Yellow above/below as up/down — `Y=2` is up, `Y=0` is down — with
-  Green/Red/Blue/Orange side by side as left/front/right/back).
+- `show` (alias `s`) — prints the cube's `CubeStateId` (so a state can be compared or looked up
+  without eyeballing the matrix), then the cube itself as one big matrix: an opened-up box with all
+  6 sides visible at once, laid out as the standard unfolded cross (White/Yellow above/below as
+  up/down — `Y=2` is up, `Y=0` is down — with Green/Red/Blue/Orange side by side as
+  left/front/right/back). Every tile shows its `(x,y,z)` coordinate, its current color, and the id
+  of the physical piece it belongs to (e.g. `YGR` for the piece made of yellow/green/red tales) —
+  the piece id is what lets you track one specific piece as it moves across rotations, since the
+  coordinate alone only names the slot.
 - `rotate` (alias `r`) `<move...>` — applies one or more moves, e.g. `rotate Red Blue' Green2`.
 - `history` — lists the moves applied since the last `init`.
 - `help`, `exit` / `quit`.

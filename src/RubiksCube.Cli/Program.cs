@@ -10,6 +10,8 @@ namespace RubiksCube.Cli
 
         public static void Main(string[] args)
         {
+            AnsiConsole.EnableTrueColor();
+
             var session = new CubeSession();
 
             Console.WriteLine("Rubik's Cube CLI. Type 'help' for commands.");
@@ -89,7 +91,7 @@ namespace RubiksCube.Cli
         {
             Console.WriteLine("Commands:");
             Console.WriteLine("  init             Initialize the cube (solved, scrambled, or from a move sequence).");
-            Console.WriteLine("  show | s         Print the cube as an opened-up box (all 6 sides, every tile's coordinate and color).");
+            Console.WriteLine("  show | s         Print the cube's state id and an opened-up box (all 6 sides, every tile's coordinate and color).");
             Console.WriteLine("  rotate | r <m..> Apply one or more moves, e.g. \"rotate Red Blue' Green2\".");
             Console.WriteLine("  history          List the moves applied since the last init.");
             Console.WriteLine("  help             Show this message.");
