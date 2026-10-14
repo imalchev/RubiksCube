@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube", "RubiksCube\RubiksCube.csproj", "{E3D01E69-C7FF-40EC-BE55-D6A28C73EB66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube", "src\RubiksCube\RubiksCube.csproj", "{E3D01E69-C7FF-40EC-BE55-D6A28C73EB66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Test", "RubiksCube.Test\RubiksCube.Test.csproj", "{1942AD52-E25F-4553-9400-7B49EF955A09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Test", "test\RubiksCube.Test\RubiksCube.Test.csproj", "{1942AD52-E25F-4553-9400-7B49EF955A09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Solver", "RubiksCube.Solver\RubiksCube.Solver.csproj", "{5904CFC1-132A-408A-B327-BEE73409FBFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Solver", "src\RubiksCube.Solver\RubiksCube.Solver.csproj", "{5904CFC1-132A-408A-B327-BEE73409FBFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Solver.Test", "RubiksCube.Solver.Test\RubiksCube.Solver.Test.csproj", "{24E88443-4C57-47F6-8AE9-1A780413B8E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiksCube.Solver.Test", "test\RubiksCube.Solver.Test\RubiksCube.Solver.Test.csproj", "{24E88443-4C57-47F6-8AE9-1A780413B8E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
